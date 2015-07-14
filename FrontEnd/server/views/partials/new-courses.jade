@@ -1,0 +1,8 @@
+//
+   Created by Sean Ross on 15/7/2015.
+
+.panel.panel-primary
+   .panel-heading.text-center New Courses
+   .panel-body
+      .row(ng-repeat='course in courses | orderBy:published.true')
+         .col-md-12 {{ course.name }}
