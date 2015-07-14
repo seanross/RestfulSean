@@ -1,0 +1,19 @@
+//
+   Created by Sean Ross on 12/7/2015.
+
+doctype html
+html
+   head
+      title Sean Basic App
+      link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
+      link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.min.css")
+      link(rel="stylesheet", href="/vendor/toastr/toastr.css")
+      link(rel="stylesheet", href="/css/sticky-footer-navbar.css")
+      link(rel="stylesheet", href="/css/site.css")
+   body(ng-app="app")
+      include nav
+      block main-content
+      include scripts
+      footer.footer
+         .containter
+            p.text-muted Place sticky footer content here.
