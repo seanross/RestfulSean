@@ -12,7 +12,7 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         requireBase: false
     });
     $routeProvider.when('/', {
-        templateUrl : '/partials/main',
+        templateUrl : '/partials/main/main',
         controller : 'mvMainCtrl'
     })
 });

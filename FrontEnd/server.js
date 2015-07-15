@@ -50,9 +50,9 @@ var server = app.listen(app.get('port'), function () {
 });
 
 
-app.get('/partials/:partialPath', function(req, res){
+app.get('/partials/:one/:two', function(req, res){
 
-    var pp = 'partials/' + req.params.partialPath;
+    var pp = '../../public/app/' + req.params.one + "/" + req.params.two;
     console.log("Calling partial path " + pp);
     res.render(pp);
 });
