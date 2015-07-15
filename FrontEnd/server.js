@@ -31,7 +31,7 @@ app.use(stylus.middleware({
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'jade');
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/media/favicon.ico'));
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(session({ resave: true,

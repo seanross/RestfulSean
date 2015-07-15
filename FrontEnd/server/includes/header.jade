@@ -1,27 +1,28 @@
 //
    Created by S.FORTUNATO on 7/15/2015.
 
-#carousel-sean-generic.carousel.slide(data-ride="carousel")
-   ol.carousel-indicators
-      li.active(data-target="#carousel-sean-generic", data-slide-to="0")
-      li(data-target="#carousel-sean-generic", data-slide-to="1")
-      li(data-target="#carousel-sean-generic", data-slide-to="2")
+.container-fluid
+   #carousel-sean-generic.carousel.slide(data-ride="carousel")
+      ol.carousel-indicators
+         li.active(data-target="#carousel-sean-generic", data-slide-to="0")
+         li(data-target="#carousel-sean-generic", data-slide-to="1")
+         li(data-target="#carousel-sean-generic", data-slide-to="2")
 
-   .carousel-inner(role="listbox")
-      .item.active
-         img(src="x", alt="Something to think about")
-         .carousel-caption Ang Pogi ko pa rin di ba
-      .item
-         img(src="x", alt="Something to think about 2")
-         .carousel-caption Ang Pogi ko pa rin di ba times 2
-      .item
-         img(src="x", alt="Something to think about 3")
-         .carousel-caption Ang Pogi ko pa rin di ba times 3
+      .carousel-inner(role="listbox")
+         .item.active
+            img(src="/media/kewl.jpg", alt="Something to think about")
+            .carousel-caption Ang Pogi ko pa rin di ba
+         .item
+            img(src="/media/kewl.jpg", alt="Something to think about 2")
+            .carousel-caption Ang Pogi ko pa rin di ba times 2
+         .item
+            img(src="/media/kewl.jpg", alt="Something to think about 3")
+            .carousel-caption Ang Pogi ko pa rin di ba times 3
 
-   a.left.carousel-control(href="#carousel-sean-generic",role="button", data-slide="prev")
-      span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
-      span.sr-only Previous
+      a.left.carousel-control(href="#carousel-sean-generic",role="button", data-slide="prev")
+         span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
+         span.sr-only Previous
 
-   a.right.carousel-control(href="#carousel-sean-generic",role="button", data-slide="next")
-      span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
-      span.sr-only Next
+      a.right.carousel-control(href="#carousel-sean-generic",role="button", data-slide="next")
+         span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
+         span.sr-only Next
