@@ -5,3 +5,4 @@ FrontEnd/public/app/**/*.html
 FrontEnd/server/includes/**/*.html
 FrontEnd/server/views/**/*.html
 FrontEnd/public/css/**/*.css
+/build/
