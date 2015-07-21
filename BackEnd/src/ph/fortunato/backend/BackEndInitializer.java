@@ -32,7 +32,7 @@ public class BackEndInitializer implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		 final AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		    context.setConfigLocation("ph.fortunato.backend");
+		    context.setConfigLocation("ph.fortunato.backend.configuration");
 
 		    final FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());
 		    characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
@@ -43,7 +43,7 @@ public class BackEndInitializer implements WebApplicationInitializer {
 //		    springSecurityFilterChain.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
 		    servletContext.addListener(new ContextLoaderListener(context));
-//		    servletContext.setInitParameter("spring.profiles.default", "production");
+		    servletContext.setInitParameter("spring.profiles.default", "dev");
 
 		    final SpringServlet servlet = new SpringServlet();
 
