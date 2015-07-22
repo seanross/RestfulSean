@@ -43,8 +43,9 @@ public class BackEndInitializer implements WebApplicationInitializer {
 //		    springSecurityFilterChain.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
 		    servletContext.addListener(new ContextLoaderListener(context));
-		    servletContext.setInitParameter("spring.profiles.default", "dev");
-
+		    servletContext.setInitParameter("spring.profiles.default", "prod");
+		    servletContext.setInitParameter("spring.profiles.active", "dev");
+		    
 		    final SpringServlet servlet = new SpringServlet();
 
 		    final ServletRegistration.Dynamic appServlet = servletContext.addServlet("appServlet", servlet);
