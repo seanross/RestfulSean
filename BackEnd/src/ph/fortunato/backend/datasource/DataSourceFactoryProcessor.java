@@ -4,7 +4,11 @@
 package ph.fortunato.backend.datasource;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -23,6 +27,8 @@ import org.springframework.stereotype.Component;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 
+import ph.fortunato.backend.datasource.dto.DataSourceAttrDto;
+import ph.fortunato.backend.datasource.dto.DataSourceDto;
 import ph.fortunato.backend.utils.PropertiesUtil;
 
 /**
@@ -33,8 +39,6 @@ import ph.fortunato.backend.utils.PropertiesUtil;
 public class DataSourceFactoryProcessor implements BeanFactoryPostProcessor, EnvironmentAware {
 
 	Environment env;
-	
-
 	
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
@@ -55,34 +59,16 @@ public class DataSourceFactoryProcessor implements BeanFactoryPostProcessor, Env
 		BeanDefinitionRegistry factory = (BeanDefinitionRegistry) beanFactory;
 		BeanDefinitionBuilder datasourceDefinitionBuilder;
 		Properties dbProps = PropertiesUtil.getDataSourceProperties(Arrays.asList(env.getActiveProfiles()).contains("dev")?"dev":"prod");
-		Properties rootProps = PropertiesUtil.getRootProperties(Arrays.asList(env.getActiveProfiles()).contains("dev")?"dev":"prod");
-		
+
 		/**
 		 * REGISTER BEANS USING KEYS
 		 */
-		for(String key : dbProps.stringPropertyNames()){
-			
-//			String arr[] = key.split("\\.", 0);
-//			for(String x : arr){
-//				Logger.getLogger(this.getClass()).info( key.split("\\.", 3)[2]);
-//			}
-//			 String[] result = key.split("\\.");
-//		     for (int x=0; x<result.length; x++)
-//		         System.out.println(result[x]);
+		for(DataSourceDto ds : PropertiesUtil.dataSourcePropertiesTokenizer(dbProps)){
 			datasourceDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(BoneCPDataSource.class);
-			datasourceDefinitionBuilder.addPropertyValue("jdbcUrl", dbProps.getProperty(key));
-			datasourceDefinitionBuilder.addPropertyValue("user", rootProps.getProperty("common.datasource.user"));
-			datasourceDefinitionBuilder.addPropertyValue("password", rootProps.getProperty("common.datasource.password"));
-			datasourceDefinitionBuilder.addPropertyValue("driverClass", rootProps.getProperty("common.datasource.driverClass"));
-			datasourceDefinitionBuilder.addPropertyValue("idleMaxAgeInMinutes", rootProps.getProperty("common.datasource.idleMaxAgeInMinutes"));
-			datasourceDefinitionBuilder.addPropertyValue("idleConnectionTestPeriodInMinutes", rootProps.getProperty("common.datasource.idleConnectionTestPeriodInMinutes"));
-			datasourceDefinitionBuilder.addPropertyValue("maxConnectionsPerPartition", rootProps.getProperty("common.datasource.maxConnectionsPerPartition"));
-			datasourceDefinitionBuilder.addPropertyValue("minConnectionsPerPartition", rootProps.getProperty("common.datasource.minConnectionsPerPartition"));
-			datasourceDefinitionBuilder.addPropertyValue("partitionCount", rootProps.getProperty("common.datasource.partitionCount"));
-			datasourceDefinitionBuilder.addPropertyValue("acquireIncrement", rootProps.getProperty("common.datasource.acquireIncrement"));
-			datasourceDefinitionBuilder.addPropertyValue("statementsCacheSize", rootProps.getProperty("common.datasource.statementsCacheSize"));
-
-			factory.registerBeanDefinition(key + "DataSource", datasourceDefinitionBuilder.getBeanDefinition());
+			for(DataSourceAttrDto attr : ds.getDataSourceAttr()){
+				datasourceDefinitionBuilder.addPropertyValue(attr.getKey(), attr.getProp());
+			}
+			factory.registerBeanDefinition(ds.getDataSourceKey() + "DataSource", datasourceDefinitionBuilder.getBeanDefinition());
 		}
 		
 		MutablePropertyValues mutablePropertyValues = factory.getBeanDefinition("backEndRoutingDataSource").getPropertyValues();
@@ -93,10 +79,9 @@ public class DataSourceFactoryProcessor implements BeanFactoryPostProcessor, Env
 		
 		ManagedMap<String, RuntimeBeanReference> mm = new ManagedMap<String, RuntimeBeanReference>();
 
-        for(String key : dbProps.stringPropertyNames()){
-            mm.put(key, new RuntimeBeanReference(key + "DataSource"));
-        }
-
+		for(DataSourceDto ds : PropertiesUtil.dataSourcePropertiesTokenizer(dbProps)){
+			mm.put(ds.getDataSourceKey(), new RuntimeBeanReference(ds.getDataSourceKey() + "DataSource"));
+		}
 		mutablePropertyValues.addPropertyValue("targetDataSources", mm);
 
 	}
@@ -105,4 +90,5 @@ public class DataSourceFactoryProcessor implements BeanFactoryPostProcessor, Env
 	public void setEnvironment(Environment environment) {
 		this.env = environment;
 	}
+	
 }

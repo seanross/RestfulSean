@@ -4,6 +4,8 @@
 package ph.fortunato.backend.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -15,6 +17,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Component;
 
+import ph.fortunato.backend.datasource.dto.DataSourceAttrDto;
+import ph.fortunato.backend.datasource.dto.DataSourceDto;
 import ph.fortunato.backend.exceptions.NoDataSourcePropertyFoundException;
 
 /**
@@ -76,15 +80,51 @@ public class PropertiesUtil {
 		if(dbProps.isEmpty()) throw new NoDataSourcePropertyFoundException();
 		Properties rootProps = PropertiesUtil.getRootProperties(env);
 		String candidate = "";
-		if(NullChecker.isEmpty(rootProps.get("common.datasource.default"))) {
+		if(NullChecker.isEmpty(rootProps.get("default.datasource.key"))) {
 			log.warn("No default datasource key written in root.properties. Selecting the first datasource key found in datasources.properties.");
 			for(String key : dbProps.stringPropertyNames()){
 				candidate = key;
 				break; //only 1 is needed
 			}
 		}else {
-			candidate = rootProps.get("common.datasource.default").toString();
+			candidate = rootProps.get("default.datasource.key").toString();
 		}
 		return candidate;
+	}
+	
+	/**
+	 * A tokenizer for converting value paired property into manageable datasource DTO
+	 * @param props
+	 * @return
+	 */
+	public static List<DataSourceDto> dataSourcePropertiesTokenizer(Properties props){
+		List<DataSourceDto> dataSources = new ArrayList<>();
+		
+		List<String> keys = new ArrayList<>();
+		for(String prop : props.stringPropertyNames()){
+			String targetKey = prop.split("\\.", 3)[0];
+			if(!keys.contains(targetKey.split("\\.", 3)[0])) keys.add(targetKey.split("\\.", 3)[0]);
+		}
+		
+		for(String key : keys){
+			DataSourceDto datasource = new DataSourceDto();
+			
+			datasource.setDataSourceKey(key);
+			List<DataSourceAttrDto> attrList = new ArrayList<>();
+			
+			for(String prop : props.stringPropertyNames()){
+				String targetKey = prop.split("\\.", 3)[0];
+				if(key.equals(targetKey)){
+					DataSourceAttrDto attr = new DataSourceAttrDto();
+					attr.setKey(prop.split("\\.", 3)[2]);
+					attr.setProp(props.getProperty(prop));
+					attrList.add(attr);
+				}
+			}
+			datasource.setDataSourceAttr(attrList);
+			dataSources.add(datasource);
+		}
+
+		return dataSources;
 	}
 }
