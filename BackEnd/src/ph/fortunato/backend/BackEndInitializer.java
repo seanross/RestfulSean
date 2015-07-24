@@ -39,9 +39,6 @@ public class BackEndInitializer implements WebApplicationInitializer {
 		    characterEncodingFilter.setInitParameter("encoding", "UTF-8");
 		    characterEncodingFilter.setInitParameter("forceEncoding", "true");
 
-//		    final FilterRegistration.Dynamic springSecurityFilterChain = servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
-//		    springSecurityFilterChain.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-
 		    servletContext.addListener(new ContextLoaderListener(context));
 		    servletContext.setInitParameter("spring.profiles.default", "prod");
 		    servletContext.setInitParameter("spring.profiles.active", "dev");

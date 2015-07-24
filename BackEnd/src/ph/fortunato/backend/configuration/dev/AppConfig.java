@@ -75,15 +75,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    return transactionManager;
 	}
 	
-//	@Value("${db.url}") private String dbUrl;
-//	@Value("${db.user}") private String dbUser;
-//	@Value("${db.password}") private String dbPass;
-//	@Value("${db.jdbc.driver}") private String dbJdbcDriver;
-//	@Value("${db.acquire.increment}") private Integer dbAcquireIncrement;
-//	@Value("${db.min.pool.size}") private Integer dbMinPoolSize;
-//	@Value("${db.max.pool.size}") private Integer dbMaxPoolSize;
-//	@Value("${db.idle.connection.test.period}") private Integer dbIdleConnectionTestPeriod;
-//	@Value("${db.max.idle.time.excess.connections}") private Integer dbMaxIdleTimeExcessConnections;
 	@Value("${db.package.to.scan}") private String dbPackageToScan;
 	@Value("${db.show.sql}") private String dbShowSql;
 	@Value("${db.hbm2ddl.auto}") private String dbHbm2DdlAuto;

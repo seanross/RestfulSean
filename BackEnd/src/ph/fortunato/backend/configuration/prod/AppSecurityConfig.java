@@ -19,7 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	static{
-		Logger.getLogger(AppConfig.class).info("Setting up spring security configuration under PRODUCTION.");
+		Logger.getLogger(AppSecurityConfig.class).info("Setting up spring security configuration under PRODUCTION.");
 	}
 	
 }
