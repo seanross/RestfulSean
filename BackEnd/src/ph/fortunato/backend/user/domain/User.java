@@ -8,14 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import ph.fortunato.backend.common.domain.Updatable;
+import ph.fortunato.backend.generic.domain.Updatable;
 
 /**
  * @author S.FORTUNATO
  *
  */
 @Entity
+@XmlRootElement
+@Table(name="users")
 public class User extends Updatable {
 
 	private Long id;
@@ -31,7 +35,7 @@ public class User extends Updatable {
 		this.id = id;
 	}
 	
-	@Column
+	@Column(name="username")
 	public String getUsername() {
 		return username;
 	}
@@ -39,7 +43,7 @@ public class User extends Updatable {
 		this.username = username;
 	}
 	
-	@Column
+	@Column(name="password")
 	public String getPassword() {
 		return password;
 	}

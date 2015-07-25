@@ -1,6 +1,5 @@
 package ph.fortunato.backend.configuration.dev;
 
-import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -19,9 +18,12 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import com.jolbox.bonecp.BoneCPDataSource;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.springframework.web.servlet.view.tiles3.TilesView;
 
 import ph.fortunato.backend.datasource.BackEndRoutingDataSource;
 
@@ -46,6 +48,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+	
+//	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+//	    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+//	}
 	
 	@Bean(name="propertySourcePlaceholderConfigurer")
 	public static PropertySourcesPlaceholderConfigurer getPropertySourcesPlaceholderConfigurer(){
