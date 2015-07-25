@@ -5,7 +5,6 @@ package ph.fortunato.backend.user.api;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -26,8 +25,6 @@ import ph.fortunato.backend.user.domain.User;
  */
 @Path("user")
 @Component
-@Consumes({MediaType.APPLICATION_JSON})
-@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 public class UserApi {
 
 	@Autowired
@@ -35,6 +32,7 @@ public class UserApi {
 
 	@GET
 	@Path("list")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response getUserList() {
 		GenericEntity<List<User>> entity = new GenericEntity<List<User>>(userBo.getAll()) {};
 		return Response.status(200).entity(entity).build();
