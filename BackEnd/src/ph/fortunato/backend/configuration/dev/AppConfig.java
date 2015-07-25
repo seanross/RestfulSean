@@ -44,10 +44,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 	
-//	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-//	    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-//	}
-	
 	@Bean(name="propertySourcePlaceholderConfigurer")
 	public static PropertySourcesPlaceholderConfigurer getPropertySourcesPlaceholderConfigurer(){
 		return new PropertySourcesPlaceholderConfigurer();

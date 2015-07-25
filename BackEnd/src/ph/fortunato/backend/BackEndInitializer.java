@@ -46,8 +46,6 @@ public class BackEndInitializer implements WebApplicationInitializer {
 
 		    final ServletRegistration.Dynamic appServlet = servletContext.addServlet("appServlet", servlet);
 		    appServlet.setInitParameter("com.sun.jersey.config.property.packages", "ph.fortunato.backend");
-//		    appServlet.setInitParameter(arg0, arg1)
-//		    appServlet.setInitParameter("com.sun.jersey.spi.container.ContainerRequestFilters", "com.myapp.api.SizeLimitFilter");
 		    appServlet.setLoadOnStartup(1);
 
 		    final Set<String> mappingConflicts = appServlet.addMapping("/*");
