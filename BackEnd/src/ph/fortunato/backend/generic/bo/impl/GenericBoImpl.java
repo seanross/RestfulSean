@@ -37,8 +37,8 @@ public abstract class GenericBoImpl<E, K> implements GenericBo<E, K> {
  
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public E get(K id) {
-        return genericDao.find(id);
+    public E get(K key) {
+        return genericDao.find(key);
     }
  
     @Override
@@ -58,6 +58,14 @@ public abstract class GenericBoImpl<E, K> implements GenericBo<E, K> {
     public void remove(E entity) {
         genericDao.remove(entity);
     }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void disable(K key) {
+        genericDao.disable(key);
+    }
+    
+    
     
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

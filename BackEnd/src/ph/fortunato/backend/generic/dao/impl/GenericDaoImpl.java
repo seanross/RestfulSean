@@ -9,10 +9,12 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -68,16 +70,27 @@ public abstract class GenericDaoImpl<E, K extends Serializable> implements Gener
     public void remove(E entity) {
         currentSession().delete(entity);
     }
+    
+    @Override
+    public void disable(K key){
+    	Query hql = currentSession().createQuery("update "+ daoType.getName() +" set isDisabled = :isDisabled where id = :id");
+    	hql.setParameter("isDisabled", true);
+    	hql.setParameter("id", key);
+    	hql.executeUpdate();
+    }
      
     @Override
     public E find(K key) {
-        return (E) currentSession().get(daoType, key);
+    	Criteria criteria = currentSession().createCriteria(daoType);
+    	criteria.add(Property.forName("id").eq(key));
+    	criteria.add(Restrictions.isNull("isDisabled"));
+        return (E) criteria.uniqueResult();
     }
     
     @Override
     public List<E> get(int page, int size, String column, boolean isAscending){
     	Criteria criteria = currentSession().createCriteria(daoType);
-    	criteria.add(Restrictions.isNull("isDeleted"));
+    	criteria.add(Restrictions.isNull("isDisabled"));
     	if(!NullChecker.isEmpty(column)){
 	        if (isAscending) {
 	            criteria.addOrder(Order.asc(column));
@@ -101,7 +114,7 @@ public abstract class GenericDaoImpl<E, K extends Serializable> implements Gener
     @Override
     public Long count(){
     	Criteria criteria = currentSession().createCriteria(daoType);
-    	criteria.add(Restrictions.isNull("isDeleted"))
+    	criteria.add(Restrictions.isNull("isDisabled"))
 	    		.setProjection(Projections.rowCount());
     	return (Long) criteria.uniqueResult();
     }

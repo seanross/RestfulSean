@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ph.fortunato.backend.generic.domain;
+package ph.fortunato.backend.generic.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

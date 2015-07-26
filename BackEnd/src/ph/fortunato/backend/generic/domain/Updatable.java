@@ -17,7 +17,7 @@ public class Updatable {
 	protected String createdDate;
 	protected Long updatedBy;
 	protected String updatedDate;
-	protected Boolean isDeleted;
+	protected Boolean isDisabled;
 	
 	@Column(name="updated_by")
 	public Long getUpdatedBy() {
@@ -35,14 +35,7 @@ public class Updatable {
 		this.updatedDate = updatedDate;
 	}
 	
-	@Column(name="is_deleted")
-	public Boolean getIsDeleted() {
-		return isDeleted;
-	}
-	public void setIsDeleted(Boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-	
+
 	@Column(name="created_by")
 	public Long getCreatedBy() {
 		return createdBy;
@@ -57,5 +50,13 @@ public class Updatable {
 	}
 	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	@Column(name="is_disabled")
+	public Boolean getIsDisabled() {
+		return isDisabled;
+	}
+	public void setIsDisabled(Boolean isDisabled) {
+		this.isDisabled = isDisabled;
 	}
 }

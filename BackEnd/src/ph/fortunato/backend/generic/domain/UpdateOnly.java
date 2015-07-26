@@ -13,7 +13,7 @@ public class UpdateOnly {
 	
 	protected Long updatedBy;
 	protected String updatedDate;
-	protected Boolean isDeleted;
+	private Boolean isDisabled;
 	
 	@Column(name="updated_by")
 	public Long getUpdatedBy() {
@@ -31,11 +31,11 @@ public class UpdateOnly {
 		this.updatedDate = updatedDate;
 	}
 	
-	@Column(name="is_deleted")
-	public Boolean getIsDeleted() {
-		return isDeleted;
+	@Column(name="is_disabled")
+	public Boolean getIsDisabled() {
+		return isDisabled;
 	}
-	public void setIsDeleted(Boolean isDeleted) {
-		this.isDeleted = isDeleted;
+	public void setIsDisabled(Boolean isDisabled) {
+		this.isDisabled = isDisabled;
 	}
 }
