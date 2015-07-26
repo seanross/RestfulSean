@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface GenericBo<E, K> {
 
-	public void saveOrUpdate(E entity);
-    public List<E> getAll();
-    public E get(K id);
-    public void add(E entity);
-    public void update(E entity);
-    public void remove(E entity);
-    
+	void saveOrUpdate(E entity);
+    E get(K id);
+    void add(E entity);
+    void update(E entity);
+    void remove(E entity);
+    List<E> get(int page, int size, String column, boolean isAscending);
+    Long count();
 }

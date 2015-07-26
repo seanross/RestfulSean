@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface GenericDao<E, K> {
 
-	public void add(E entity) ;
-    public void saveOrUpdate(E entity) ;
-    public void update(E entity) ;
-    public void remove(E entity);
-    public E find(K key);
-    public List<E> getAll() ;
-    
+	void add(E entity) ;
+    void saveOrUpdate(E entity) ;
+    void update(E entity) ;
+    void remove(E entity);
+    E find(K key);
+    List<E> get(int page, int size, String column, boolean isAscending);
+    Long count();
 }

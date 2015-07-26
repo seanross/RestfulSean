@@ -34,11 +34,6 @@ public abstract class GenericBoImpl<E, K> implements GenericBo<E, K> {
         genericDao.saveOrUpdate(entity);
     }
  
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public List<E> getAll() {
-        return genericDao.getAll();
-    }
  
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -63,5 +58,16 @@ public abstract class GenericBoImpl<E, K> implements GenericBo<E, K> {
     public void remove(E entity) {
         genericDao.remove(entity);
     }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public List<E> get(int page, int size, String column, boolean isAscending){
+    	return genericDao.get(page, size, column, isAscending);
+    }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+    public Long count(){
+    	return genericDao.count();
+    }
 }

@@ -8,12 +8,17 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ph.fortunato.backend.generic.dao.GenericDao;
+import ph.fortunato.backend.utils.NullChecker;
 
 /**
  * @author Sean Ross
@@ -68,10 +73,36 @@ public abstract class GenericDaoImpl<E, K extends Serializable> implements Gener
     public E find(K key) {
         return (E) currentSession().get(daoType, key);
     }
-     
+    
     @Override
-    public List<E> getAll() {
-        return currentSession().createCriteria(daoType).list();
+    public List<E> get(int page, int size, String column, boolean isAscending){
+    	Criteria criteria = currentSession().createCriteria(daoType);
+    	criteria.add(Restrictions.isNull("isDeleted"));
+    	if(!NullChecker.isEmpty(column)){
+	        if (isAscending) {
+	            criteria.addOrder(Order.asc(column));
+	        } else {
+	            criteria.addOrder(Order.desc(column));
+	        }
+	    } else {
+	        if (isAscending) {
+	            criteria.addOrder(Order.asc("id"));
+	            criteria.addOrder(Order.asc("updatedDate"));
+	        } else {
+	            criteria.addOrder(Order.desc("id"));
+	            criteria.addOrder(Order.desc("updatedDate"));
+	        }
+	    }
+    	criteria.setFirstResult((page - 1) * size);
+    	criteria.setMaxResults(size);
+	    return criteria.list();
     }
 
+    @Override
+    public Long count(){
+    	Criteria criteria = currentSession().createCriteria(daoType);
+    	criteria.add(Restrictions.isNull("isDeleted"))
+	    		.setProjection(Projections.rowCount());
+    	return (Long) criteria.uniqueResult();
+    }
 }
