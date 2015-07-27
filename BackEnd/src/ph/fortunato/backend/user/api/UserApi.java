@@ -14,15 +14,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ph.fortunato.backend.generic.dto.Count;
-import ph.fortunato.backend.generic.dto.Message;
+import com.sun.jersey.api.JResponse;
+
+import ph.fortunato.backend.generic.dto.Wrapper;
 import ph.fortunato.backend.user.bo.UserBo;
 import ph.fortunato.backend.user.domain.User;
 
@@ -41,56 +40,53 @@ public class UserApi {
 	@GET
 	@Path("get")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response get(
+	public JResponse<List<User>> get(
 			@QueryParam("page") int page,
 			@QueryParam("size") int size,
 			@QueryParam("column") String column,
 			@QueryParam("isAscending") boolean isAscending) {
 		List<User> users = userBo.get(page, size, column, isAscending);
-		GenericEntity<List<User>> wrapper = new GenericEntity<List<User>>(users){
-			//GenericEntity is used to wrap collection of objects
-		};
-		return Response.ok(wrapper).build();
+		return JResponse.ok(users).build();
 	}
 
 	@GET
 	@Path("get/{id}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response get(@PathParam("id") Long id){
-		return Response.ok(userBo.get(id)).build();
+	public JResponse<User> get(@PathParam("id") Long id){
+		return JResponse.ok(userBo.get(id)).build();
 	}
 	
 	@POST
-	@Path("add")	
+	@Path("create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response add(User user){
-		userBo.add(user);
-		return Response.ok(new Message<String>("User saved " + user)).build();
+	public JResponse<Wrapper> create(User user){
+		userBo.create(user);
+		return JResponse.ok(Wrapper.message("User created " + user)).build();
 	}
 	
 	@PUT
-	@Path("update")	
+	@Path("update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response update(User user){
-		userBo.saveOrUpdate(user);
-		return Response.ok(new Message<String>("User updated " + user)).build();
+	public JResponse<Wrapper> update(User user){
+		userBo.update(user);
+		return JResponse.ok(Wrapper.message("User updated " + user)).build();
 	}
 	
 	@DELETE
 	@Path("disable/{id}")	
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response disable(@PathParam("id") Long id){
+	public JResponse<Wrapper> disable(@PathParam("id") Long id){
 		userBo.disable(id);
-		return Response.ok(new Message<String>("User disabled")).build();
+		return JResponse.ok(Wrapper.message("User disabled")).build();
 	}
 	
 	@GET
 	@Path("count")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response count() {
-		return Response.ok(new Count(userBo.count())).build();
+	public JResponse<Wrapper> count() {
+		return JResponse.ok(Wrapper.message(userBo.count().toString())).build();
 	}
 }

@@ -13,7 +13,7 @@ public interface GenericBo<E, K> {
 
 	void saveOrUpdate(E entity);
     E get(K key);
-    void add(E entity);
+    void create(E entity);
     void update(E entity);
     void remove(E entity);
     void disable(K key);

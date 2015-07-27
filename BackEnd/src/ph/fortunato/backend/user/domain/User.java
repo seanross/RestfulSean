@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import ph.fortunato.backend.generic.domain.Updatable;
+import ph.fortunato.backend.generic.domain.Logged;
 
 /**
  * @author S.FORTUNATO
@@ -20,7 +20,7 @@ import ph.fortunato.backend.generic.domain.Updatable;
 @Entity
 @XmlRootElement
 @Table(name="users")
-public class User extends Updatable {
+public class User extends Logged {
 
 	private Long id;
 	private String username;

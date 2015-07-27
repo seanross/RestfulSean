@@ -43,8 +43,8 @@ public abstract class GenericBoImpl<E, K> implements GenericBo<E, K> {
  
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void add(E entity) {
-        genericDao.add(entity);
+    public void create(E entity) {
+        genericDao.create(entity);
     }
  
     @Override
