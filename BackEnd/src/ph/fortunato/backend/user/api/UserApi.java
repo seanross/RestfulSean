@@ -24,6 +24,7 @@ import com.sun.jersey.api.JResponse;
 import ph.fortunato.backend.generic.dto.Wrapper;
 import ph.fortunato.backend.user.bo.UserBo;
 import ph.fortunato.backend.user.domain.User;
+import ph.fortunato.backend.user.dto.UserRolesDto;
 
 
 /**
@@ -47,6 +48,14 @@ public class UserApi {
 			@QueryParam("isAscending") boolean isAscending) {
 		List<User> users = userBo.get(page, size, column, isAscending);
 		return JResponse.ok(users).build();
+	}
+	
+	@GET
+	@Path("custom")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public JResponse<UserRolesDto> getCustom() {
+		/*List<User> users = userBo.get(page, size, column, isAscending);*/
+		return JResponse.ok(userBo.getCustomUser()).build();
 	}
 
 	@GET

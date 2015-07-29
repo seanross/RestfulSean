@@ -3,12 +3,17 @@
  */
 package ph.fortunato.backend.user.dao.impl;
 
-import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Repository;
 
 import ph.fortunato.backend.generic.dao.impl.GenericDaoImpl;
 import ph.fortunato.backend.user.dao.UserDao;
 import ph.fortunato.backend.user.domain.User;
+import ph.fortunato.backend.user.dto.UserRolesDto;
 
 /**
  * @author Sean Ross
@@ -17,6 +22,11 @@ import ph.fortunato.backend.user.domain.User;
 @Repository("userDao")
 public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
+	public UserRolesDto getCustomUser(){
+		Query q = currentSession().createQuery("SELECT u.username as username from User as u WHERE id = 1");
+		List result = q.setResultTransformer(Transformers.aliasToBean(UserRolesDto.class)).list();
+		return (UserRolesDto) result.get(0);
+	}
 //	@Override
 //    public boolean removeAdmin(Integer id) {
 //        Query employeeTaskQuery = currentSession().createQuery(

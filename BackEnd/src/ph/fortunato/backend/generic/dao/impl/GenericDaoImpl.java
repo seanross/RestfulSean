@@ -6,6 +6,7 @@ package ph.fortunato.backend.generic.dao.impl;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -73,8 +74,10 @@ public abstract class GenericDaoImpl<E, K extends Serializable> implements Gener
     
     @Override
     public void disable(K key){
-    	Query hql = currentSession().createQuery("update "+ daoType.getName() +" set isDisabled = :isDisabled where id = :id");
+    	String q = "update "+ daoType.getName() +" set isDisabled = :isDisabled, updatedDate = :updatedDate where id = :id";
+    	Query hql = currentSession().createQuery(q);
     	hql.setParameter("isDisabled", true);
+    	hql.setParameter("updatedDate", new Date());
     	hql.setParameter("id", key);
     	hql.executeUpdate();
     }
