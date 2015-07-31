@@ -10,6 +10,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Immutable;
+
+
 /**
  * @author S.FORTUNATO
  *
@@ -23,7 +26,7 @@ public class Logged {
 	protected Date updatedDate;
 	protected Boolean isDisabled;
 	
-	@Column(name="updated_by")
+	@Column
 	public Long getUpdatedBy() {
 		return updatedBy;
 	}
@@ -31,8 +34,7 @@ public class Logged {
 		this.updatedBy = updatedBy;
 	}
 	
-
-	@Column(name="created_by")
+	@Column
 	public Long getCreatedBy() {
 		return createdBy;
 	}
@@ -41,7 +43,7 @@ public class Logged {
 	}
 	
 	
-	@Column(name="is_disabled")
+	@Column
 	public Boolean getIsDisabled() {
 		return isDisabled;
 	}
@@ -49,8 +51,8 @@ public class Logged {
 		this.isDisabled = isDisabled;
 	}
 	
+	@Column
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_date")
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -58,8 +60,8 @@ public class Logged {
 		this.createdDate = createdDate;
 	}
 	
+	@Column
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_date")
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}

@@ -28,7 +28,6 @@ import ph.fortunato.backend.utils.NullChecker;
  *
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-@Repository("genericDao")
 public abstract class GenericDaoImpl<E, K extends Serializable> implements GenericDao<E, K> {
 
 	@Autowired

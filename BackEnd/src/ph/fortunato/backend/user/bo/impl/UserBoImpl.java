@@ -3,8 +3,11 @@
  */
 package ph.fortunato.backend.user.bo.impl;
 
+import java.util.List;
+
 import javax.management.Query;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,7 @@ import ph.fortunato.backend.generic.dao.GenericDao;
 import ph.fortunato.backend.user.bo.UserBo;
 import ph.fortunato.backend.user.dao.UserDao;
 import ph.fortunato.backend.user.domain.User;
-import ph.fortunato.backend.user.dto.UserRolesDto;
+import ph.fortunato.backend.user.dto.UserDto;
 
 /**
  * @author Sean Ross
@@ -37,8 +40,17 @@ public class UserBoImpl extends GenericBoImpl<User, Long> implements UserBo {
 	}
 	
 	@Transactional
-	public UserRolesDto getCustomUser(){
+	public UserDto getCustomUser(){
 		return userDao.getCustomUser();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<User> getInitializedUser(int page, int size, String column, boolean isAscending){
+		List<User> users = this.get(page, size, column, isAscending);
+		for(User user : users){
+			Hibernate.initialize(user.getRoles());
+		}
+		return users;
 	}
 	
 //	@Override

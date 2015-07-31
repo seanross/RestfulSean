@@ -16,24 +16,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonRootName;
 
 import ph.fortunato.backend.generic.domain.Logged;
-import ph.fortunato.backend.utils.IDAdapter;
 
 /**
  * @author S.FORTUNATO
  *
  */
 @Entity
-@Table(name="users")
+@Table
 @XmlRootElement
 public class User extends Logged {
 
@@ -51,24 +46,23 @@ public class User extends Logged {
 		this.id = id;
 	}
 	
-	@Column(name="username")
+	@Column
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	@Column(name="password")
+
+	@Column
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	@XmlTransient
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="user_details", 
 		joinColumns={@JoinColumn(name="user_id", nullable=false)},
 		inverseJoinColumns={@JoinColumn(name="role_id", nullable=false)})

@@ -16,7 +16,6 @@ import ph.fortunato.backend.generic.dao.GenericDao;
  * @author Sean Ross
  *
  */
-@Service("genericBo")
 public abstract class GenericBoImpl<E, K> implements GenericBo<E, K> {
 
 	GenericDao<E, K> genericDao;
@@ -64,8 +63,6 @@ public abstract class GenericBoImpl<E, K> implements GenericBo<E, K> {
     public void disable(K key) {
         genericDao.disable(key);
     }
-    
-    
     
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

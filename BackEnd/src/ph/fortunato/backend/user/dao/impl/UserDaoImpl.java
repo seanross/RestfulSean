@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import ph.fortunato.backend.generic.dao.impl.GenericDaoImpl;
 import ph.fortunato.backend.user.dao.UserDao;
 import ph.fortunato.backend.user.domain.User;
-import ph.fortunato.backend.user.dto.UserRolesDto;
+import ph.fortunato.backend.user.dto.UserDto;
 
 /**
  * @author Sean Ross
@@ -22,10 +22,10 @@ import ph.fortunato.backend.user.dto.UserRolesDto;
 @Repository("userDao")
 public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
-	public UserRolesDto getCustomUser(){
+	public UserDto getCustomUser(){
 		Query q = currentSession().createQuery("SELECT u.username as username from User as u WHERE id = 1");
-		List result = q.setResultTransformer(Transformers.aliasToBean(UserRolesDto.class)).list();
-		return (UserRolesDto) result.get(0);
+		List result = q.setResultTransformer(Transformers.aliasToBean(UserDto.class)).list();
+		return (UserDto) result.get(0);
 	}
 //	@Override
 //    public boolean removeAdmin(Integer id) {

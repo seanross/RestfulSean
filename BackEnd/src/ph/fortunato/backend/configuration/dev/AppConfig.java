@@ -3,6 +3,7 @@ package ph.fortunato.backend.configuration.dev;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -58,11 +59,17 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean(name="sessionFactory")
 	public SessionFactory getSessionFactory(BackEndRoutingDataSource dataSource){
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
-		sessionBuilder.scanPackages(dbPackageToScan);
-		sessionBuilder.setProperty("hibernate.show_sql", dbShowSql);
-		sessionBuilder.setProperty("hibernate.hbm2ddl.auto", dbHbm2DdlAuto);
-		sessionBuilder.setProperty("hibernate.dialect", dbDialect);
+		sessionBuilder.scanPackages(hibernatePackageToScan);
+		sessionBuilder.setProperty("hibernate.show_sql", hibernateShowSql);
+		sessionBuilder.setProperty("hibernate.hbm2ddl.auto", hibernateHbm2DdlAuto);
+		sessionBuilder.setProperty("hibernate.dialect", hibernateDialect);
+		sessionBuilder.setNamingStrategy(getNamingStrategy());
 		return sessionBuilder.buildSessionFactory();
+	}
+	
+	@Bean
+	public ImprovedNamingStrategy getNamingStrategy(){
+		return new ImprovedNamingStrategy();
 	}
 	
 	@Autowired
@@ -72,10 +79,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	    return transactionManager;
 	}
 	
-	@Value("${db.package.to.scan}") private String dbPackageToScan;
-	@Value("${db.show.sql}") private String dbShowSql;
-	@Value("${db.hbm2ddl.auto}") private String dbHbm2DdlAuto;
-	@Value("${db.sql.dialect}") private String dbDialect;
+	@Value("${hibernate.package.to.scan}") private String hibernatePackageToScan;
+	@Value("${hibernate.show.sql}") private String hibernateShowSql;
+	@Value("${hibernate.hbm2ddl.auto}") private String hibernateHbm2DdlAuto;
+	@Value("${hibernate.sql.dialect}") private String hibernateDialect;
 //	@Value("${file.max.upload.size}") private Integer maxUploadSize;
 //	@Value("${message.source.base.name}") private String messageSourceBaseName;
 //	@Value("${mail.host}") private String mailHost;

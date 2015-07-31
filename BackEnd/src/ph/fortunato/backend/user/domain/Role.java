@@ -13,22 +13,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import ph.fortunato.backend.generic.domain.Logged;
-import ph.fortunato.backend.utils.IDAdapter;
 
 /**
  * @author Sean Ross
  *
  */
 @Entity
-@Table(name="roles")
+@Table
+@XmlRootElement
 public class Role extends Logged {
 
 	private Long id;
@@ -45,7 +46,7 @@ public class Role extends Logged {
 		this.id = id;
 	}
 	
-	@Column(name="description")
+	@Column
 	public String getDescription() {
 		return description;
 	}
@@ -53,7 +54,7 @@ public class Role extends Logged {
 		this.description = description;
 	}
 	
-	@Column(name="code")
+	@Column
 	public String getCode() {
 		return code;
 	}
@@ -61,6 +62,7 @@ public class Role extends Logged {
 		this.code = code;
 	}
 	
+	@XmlTransient
 	@ManyToMany(mappedBy="roles", fetch=FetchType.EAGER)
 	public List<User> getUsers() {
 		return users;

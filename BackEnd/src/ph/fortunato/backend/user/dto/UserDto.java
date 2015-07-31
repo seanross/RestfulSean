@@ -5,7 +5,6 @@ package ph.fortunato.backend.user.dto;
 
 import java.util.List;
 
-import javax.management.relation.Role;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -13,9 +12,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement
-public class UserRolesDto {
+public class UserDto {
 
 	private String username;
+	private List<RoleDto> roles;
 
 	public String getUsername() {
 		return username;
@@ -24,5 +24,15 @@ public class UserRolesDto {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public List<RoleDto> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleDto> roles) {
+		this.roles = roles;
+	}
+	
+	
 	
 }
