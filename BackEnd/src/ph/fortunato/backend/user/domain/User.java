@@ -63,7 +63,7 @@ public class User extends Logged {
 	}
 
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name="user_details", 
+	@JoinTable(name="user_detail", 
 		joinColumns={@JoinColumn(name="user_id", nullable=false)},
 		inverseJoinColumns={@JoinColumn(name="role_id", nullable=false)})
 	public List<Role> getRoles() {

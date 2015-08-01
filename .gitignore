@@ -6,3 +6,10 @@ FrontEnd/server/includes/**/*.html
 FrontEnd/server/views/**/*.html
 FrontEnd/public/css/**/*.css
 /build/
+FrontEnd2/.idea
+FrontEnd2/node_modules
+FrontEnd2/public/vendor
+FrontEnd2/public/app/**/*.html
+FrontEnd2/server/includes/**/*.html
+FrontEnd2/server/views/**/*.html
+FrontEnd2/public/css/**/*.css

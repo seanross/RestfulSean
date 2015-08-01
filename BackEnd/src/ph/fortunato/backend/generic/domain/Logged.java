@@ -3,6 +3,7 @@
  */
 package ph.fortunato.backend.generic.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.Immutable;
  *
  */
 @MappedSuperclass
-public class Logged {
+public class Logged implements Serializable{
 	
 	protected Long createdBy;
 	protected Date createdDate;
