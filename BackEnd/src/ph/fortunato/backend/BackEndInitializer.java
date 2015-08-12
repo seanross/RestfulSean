@@ -40,7 +40,7 @@ public class BackEndInitializer implements WebApplicationInitializer {
 
 		    servletContext.addListener(new ContextLoaderListener(context));
 		    servletContext.setInitParameter("spring.profiles.default", "prod");
-		    servletContext.setInitParameter("spring.profiles.active", "dev");
+		    servletContext.setInitParameter("spring.profiles.active", "prod");
 		    
 		    final SpringServlet servlet = new SpringServlet();
 

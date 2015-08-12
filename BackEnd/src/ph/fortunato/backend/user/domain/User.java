@@ -3,6 +3,7 @@
  */
 package ph.fortunato.backend.user.domain;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,10 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import ph.fortunato.backend.generic.domain.Logged;
 
@@ -30,7 +36,7 @@ import ph.fortunato.backend.generic.domain.Logged;
 @Entity
 @Table
 @XmlRootElement
-public class User extends Logged {
+public class User extends Logged implements UserDetails {
 
 	private Long id;
 	private String username;
@@ -71,6 +77,46 @@ public class User extends Logged {
 	}
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	
+	@Transient
+	@XmlTransient
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Transient
+	@XmlTransient
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Transient
+	@XmlTransient
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Transient
+	@XmlTransient
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Transient
+	@XmlTransient
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

@@ -5,10 +5,12 @@ package ph.fortunato.backend.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -44,6 +46,15 @@ public class PropertiesUtil {
 	}
 	
 	/**
+	 * GETS DATASOURCE PROPERTIES
+	 * @return
+	 * @throws IOException
+	 */
+	public static Properties getDataSourceProperties(Environment env) throws IOException{
+		return PropertiesUtil.getDataSourceProperties(Arrays.asList(env.getActiveProfiles()).contains("dev")?"dev":"prod");
+	}
+	
+	/**
 	 * GETS ROOT PROPERTIES
 	 * @return
 	 * @throws IOException
@@ -53,6 +64,15 @@ public class PropertiesUtil {
 		Properties props = PropertiesLoaderUtils.loadProperties(resource);
 		showLog("Displaying ROOT properties: ", props);
 		return props;
+	}
+	
+	/**
+	 * GETS ROOT PROPERTIES
+	 * @return
+	 * @throws IOException
+	 */
+	public static Properties getRootProperties(Environment env) throws IOException{
+		return PropertiesUtil.getRootProperties(Arrays.asList(env.getActiveProfiles()).contains("dev")?"dev":"prod");
 	}
 	
 	/**

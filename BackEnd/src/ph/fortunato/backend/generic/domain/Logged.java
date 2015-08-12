@@ -21,6 +21,10 @@ import org.hibernate.annotations.Immutable;
 @MappedSuperclass
 public class Logged implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected Long createdBy;
 	protected Date createdDate;
 	protected Long updatedBy;

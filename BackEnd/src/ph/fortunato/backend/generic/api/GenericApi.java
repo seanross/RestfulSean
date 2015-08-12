@@ -33,8 +33,15 @@ public abstract class GenericApi<E, K> {
         this.genericBo=genericBo;
     }
 	
+    /**
+     * Fetch the generic list
+     * @param page
+     * @param size
+     * @param column
+     * @param isAscending
+     * @return
+     */
     @GET
-	@Path("get")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public JResponse<List<E>> get(
 			@QueryParam("page") int page,
@@ -45,15 +52,24 @@ public abstract class GenericApi<E, K> {
 		return JResponse.ok(list).build();
 	}
 	
+    /**
+     * Get generic object by id
+     * @param id
+     * @return
+     */
 	@GET
-	@Path("get/{id}")
+	@Path("{id}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public JResponse<E> get(@PathParam("id") K id){
 		return JResponse.ok(genericBo.get(id)).build();
 	}
 	
+	/**
+	 * Creates generic entity
+	 * @param entity
+	 * @return
+	 */
 	@POST
-	@Path("create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public JResponse<Wrapper> create(E entity){
@@ -61,8 +77,12 @@ public abstract class GenericApi<E, K> {
 		return JResponse.ok(Wrapper.message(entity.getClass().getName() + " created " + entity)).build();
 	}
 	
+	/**
+	 * Updates generic entity
+	 * @param entity
+	 * @return
+	 */
 	@PUT
-	@Path("update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public JResponse<Wrapper> update(E entity){
@@ -70,8 +90,13 @@ public abstract class GenericApi<E, K> {
 		return JResponse.ok(Wrapper.message(entity.getClass().getName() + " updated " + entity)).build();
 	}
 	
+	/**
+	 * Disables generic entity
+	 * @param id
+	 * @return
+	 */
 	@DELETE
-	@Path("disable/{id}")	
+	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public JResponse<Wrapper> disable(@PathParam("id") K id){
@@ -79,6 +104,10 @@ public abstract class GenericApi<E, K> {
 		return JResponse.ok(Wrapper.message("disabled")).build();
 	}
 	
+	/**
+	 * Counts the size of generic entities
+	 * @return
+	 */
 	@GET
 	@Path("count")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

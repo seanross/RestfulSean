@@ -8,7 +8,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import ph.fortunato.backend.utils.TokenUtil;
 
 /**
  * @author Sean Ross
@@ -17,6 +21,9 @@ import org.springframework.stereotype.Component;
 @Path("/")
 @Component
 public class Home {
+	
+	@Autowired
+	TokenUtil util;
 
 	  @GET
 	  @Produces(MediaType.TEXT_PLAIN)
@@ -33,6 +40,7 @@ public class Home {
 	  @GET
 	  @Produces(MediaType.TEXT_HTML)
 	  public String sayHtmlHome() {
+		  Logger.getLogger(this.getClass()).info(util.getUserNameFromToken("sean"));
 	    return "<html> " 
 	    		+  "<title>" 
 	    			+ "BackEnd REST API" 
